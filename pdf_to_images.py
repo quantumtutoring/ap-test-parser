@@ -5,7 +5,7 @@
 #     "pdf2image",
 # ]
 # ///
-"""Convert all PDFs in a folder to PNG images. python pdf_to_images.py /path/to/folder/with/pdfs"""
+"""Convert all PDFs in a folder to PNG images. uv run pdf_to_images.py /path/to/folder/with/pdfs"""
 
 import argparse
 import sys

@@ -1,0 +1,12 @@
+[project]
+name = "ap-test-parser"
+version = "0.1.0"
+description = "AP Calculus BC FRQ Image Analyzer"
+requires-python = ">=3.10"
+dependencies = [
+    "google-genai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+analyze-frq = "analyze_frq:main"
