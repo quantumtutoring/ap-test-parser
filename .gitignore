@@ -1,0 +1,5 @@
+.DS_Store
+.env
+__pycache__/analyze_frq.cpython-311.pyc
+__pycache__/analyze_frq.cpython-313.pyc
+__pycache__/pdf_to_images.cpython-313.pyc
