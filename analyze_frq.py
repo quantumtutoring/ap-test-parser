@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-AP Calculus BC FRQ Image Analyzer
+AP Calculus AB FRQ Image Analyzer
 
-Analyzes PNG images of AP Calculus BC FRQ pages using Gemini via Vertex AI,
+Analyzes PNG images of AP Calculus AB FRQ pages using Gemini via Vertex AI,
 categorizing each question by unit and subtopic.
 
 uv run python analyze_frq.py /path/to/input/folder
@@ -55,9 +55,9 @@ def init_client():
             client = genai.Client(api_key=GEMINI_API_KEY)
             logger.info("Gemini Developer API client initialized")
 
-# AP Calculus BC Units Reference
-AP_CALC_BC_UNITS = """
-AP Calculus BC Units:
+# AP Calculus AB Units Reference
+AP_CALC_AB_UNITS = """
+AP Calculus AB Units:
 - Unit 1: Limits and Continuity
 - Unit 2: Differentiation: Definition and Fundamental Properties
 - Unit 3: Differentiation: Composite, Implicit, and Inverse Functions
@@ -66,13 +66,11 @@ AP Calculus BC Units:
 - Unit 6: Integration and Accumulation of Change
 - Unit 7: Differential Equations
 - Unit 8: Applications of Integration
-- Unit 9: Parametric Equations, Polar Coordinates, and Vector-Valued Functions
-- Unit 10: Infinite Sequences and Series
 """
 
-ANALYSIS_PROMPT = f"""Analyze this AP Calculus BC FRQ page image.
+ANALYSIS_PROMPT = f"""Analyze this AP Calculus AB FRQ page image.
 
-{AP_CALC_BC_UNITS}
+{AP_CALC_AB_UNITS}
 
 Respond with one of these formats:
 
@@ -88,7 +86,7 @@ Example output:
 QUESTION: 1a | UNIT: Unit 6: Integration and Accumulation of Change | SUBTOPIC: Average value of a function
 QUESTION: 1b | UNIT: Unit 5: Analytical Applications of Differentiation | SUBTOPIC: Mean Value Theorem"""
 
-YEAR_EXTRACT_PROMPT = """Look at this AP Calculus BC exam cover page image.
+YEAR_EXTRACT_PROMPT = """Look at this AP Calculus AB exam cover page image.
 
 Extract the year and whether it's Form B.
 
@@ -306,7 +304,7 @@ def write_results(dir_path: Path, results: list[str]) -> Path:
 
 async def main_async():
     parser = argparse.ArgumentParser(
-        description="Analyze AP Calculus BC FRQ images and categorize by unit/subtopic"
+        description="Analyze AP Calculus AB FRQ images and categorize by unit/subtopic"
     )
     parser.add_argument(
         "input_folder",
