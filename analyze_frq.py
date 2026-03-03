@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-AP Chemistry FRQ Image Analyzer
+AP Physics 1 FRQ Image Analyzer
 
-Analyzes PNG images of AP Chemistry FRQ pages using Gemini via Vertex AI,
+Analyzes PNG images of AP Physics 1 FRQ pages using Gemini via Vertex AI,
 categorizing each question by unit and subtopic.
 
 uv run python analyze_frq.py /path/to/input/folder
@@ -55,23 +55,36 @@ def init_client():
             client = genai.Client(api_key=GEMINI_API_KEY)
             logger.info("Gemini Developer API client initialized")
 
-# AP Chemistry Units Reference
-AP_CHEM_UNITS = """
-AP Chemistry Units:
-- Unit 1: Atomic Structure and Properties
-- Unit 2: Molecular and Ionic Compound Structure and Properties
-- Unit 3: Intermolecular Forces and Properties
-- Unit 4: Chemical Reactions
-- Unit 5: Kinetics
-- Unit 6: Thermodynamics
-- Unit 7: Equilibrium
-- Unit 8: Acids and Bases
-- Unit 9: Applications of Thermodynamics
+# AP Physics 1 Units Reference
+AP_PHYSICS_1_UNITS = """
+AP Physics 1 has two curriculum versions. Use the one that matches the exam year.
+
+Current curriculum (2021 onwards):
+- Unit 1: Kinematics
+- Unit 2: Force and Translational Dynamics
+- Unit 3: Work, Energy, and Power
+- Unit 4: Linear Momentum
+- Unit 5: Torque and Rotational Dynamics
+- Unit 6: Energy and Momentum of Rotating Systems
+- Unit 7: Oscillations
+- Unit 8: Fluids
+
+Old curriculum (before 2021):
+- Unit 1: Kinematics
+- Unit 2: Force and Translational Dynamics
+- Unit 3: Work, Energy, and Power
+- Unit 4: Linear Momentum
+- Unit 5: Torque and Rotational Dynamics
+- Unit 6: Energy and Momentum of Rotating Systems
+- Unit 7-old: Oscillations and Waves
+- Unit 8-old: Electric Charge and Force
+- Unit 9-old: DC Circuits
+- Unit 10-old: Mechanical Waves and Sound
 """
 
-ANALYSIS_PROMPT = f"""Analyze this AP Chemistry FRQ page image.
+ANALYSIS_PROMPT = f"""Analyze this AP Physics 1 FRQ page image.
 
-{AP_CHEM_UNITS}
+{AP_PHYSICS_1_UNITS}
 
 Respond with one of these formats:
 
@@ -87,7 +100,7 @@ Example output:
 QUESTION: 1a | UNIT: Unit 6: Integration and Accumulation of Change | SUBTOPIC: Average value of a function
 QUESTION: 1b | UNIT: Unit 5: Analytical Applications of Differentiation | SUBTOPIC: Mean Value Theorem"""
 
-YEAR_EXTRACT_PROMPT = """Look at this AP Chemistry exam cover page image.
+YEAR_EXTRACT_PROMPT = """Look at this AP Physics 1 exam cover page image.
 
 Extract the year and whether it's Form B.
 
@@ -305,7 +318,7 @@ def write_results(dir_path: Path, results: list[str]) -> Path:
 
 async def main_async():
     parser = argparse.ArgumentParser(
-        description="Analyze AP Chemistry FRQ images and categorize by unit/subtopic"
+        description="Analyze AP Physics 1 FRQ images and categorize by unit/subtopic"
     )
     parser.add_argument(
         "input_folder",
