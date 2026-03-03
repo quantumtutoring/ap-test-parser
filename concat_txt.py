@@ -12,7 +12,6 @@ Usage:
 """
 
 import argparse
-import re
 import sys
 from pathlib import Path
 
@@ -34,14 +33,7 @@ def parse_line(line: str) -> tuple | None:
     q_raw = parts[1].strip()
     unit_topic = parts[2].strip()
 
-    # Split question number and letter (e.g. "1a" → "1", "a")
-    m = re.fullmatch(r"(\d+)([a-z]*)", q_raw, re.IGNORECASE)
-    if not m:
-        return None
-    number = m.group(1)
-    letter = m.group(2)
-
-    return year, number, letter, unit_topic
+    return year, q_raw, unit_topic
 
 
 def main():
@@ -72,7 +64,7 @@ def main():
 
     wb = openpyxl.Workbook()
     ws = wb.active
-    ws.append(["Year", "Question Number", "Letter", "Unit Topic", "Source"])
+    ws.append(["Year", "Question", "Unit Topic", "Source"])
 
     total_rows = 0
     for txt_file in txt_files:
@@ -80,9 +72,9 @@ def main():
         for line in txt_file.read_text(encoding="utf-8").splitlines():
             parsed = parse_line(line)
             if parsed:
-                year, number, letter, unit_topic = parsed
-                ws.append([year, number, letter, unit_topic, pdf_name])
-                cell = ws.cell(row=ws.max_row, column=5)
+                year, question, unit_topic = parsed
+                ws.append([year, question, unit_topic, pdf_name])
+                cell = ws.cell(row=ws.max_row, column=4)
                 cell.hyperlink = pdf_name
                 cell.style = "Hyperlink"
                 total_rows += 1

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-AP Calculus AB FRQ Image Analyzer
+AP Chemistry FRQ Image Analyzer
 
-Analyzes PNG images of AP Calculus AB FRQ pages using Gemini via Vertex AI,
+Analyzes PNG images of AP Chemistry FRQ pages using Gemini via Vertex AI,
 categorizing each question by unit and subtopic.
 
 uv run python analyze_frq.py /path/to/input/folder
@@ -55,22 +55,23 @@ def init_client():
             client = genai.Client(api_key=GEMINI_API_KEY)
             logger.info("Gemini Developer API client initialized")
 
-# AP Calculus AB Units Reference
-AP_CALC_AB_UNITS = """
-AP Calculus AB Units:
-- Unit 1: Limits and Continuity
-- Unit 2: Differentiation: Definition and Fundamental Properties
-- Unit 3: Differentiation: Composite, Implicit, and Inverse Functions
-- Unit 4: Contextual Applications of Differentiation
-- Unit 5: Analytical Applications of Differentiation
-- Unit 6: Integration and Accumulation of Change
-- Unit 7: Differential Equations
-- Unit 8: Applications of Integration
+# AP Chemistry Units Reference
+AP_CHEM_UNITS = """
+AP Chemistry Units:
+- Unit 1: Atomic Structure and Properties
+- Unit 2: Molecular and Ionic Compound Structure and Properties
+- Unit 3: Intermolecular Forces and Properties
+- Unit 4: Chemical Reactions
+- Unit 5: Kinetics
+- Unit 6: Thermodynamics
+- Unit 7: Equilibrium
+- Unit 8: Acids and Bases
+- Unit 9: Applications of Thermodynamics
 """
 
-ANALYSIS_PROMPT = f"""Analyze this AP Calculus AB FRQ page image.
+ANALYSIS_PROMPT = f"""Analyze this AP Chemistry FRQ page image.
 
-{AP_CALC_AB_UNITS}
+{AP_CHEM_UNITS}
 
 Respond with one of these formats:
 
@@ -86,7 +87,7 @@ Example output:
 QUESTION: 1a | UNIT: Unit 6: Integration and Accumulation of Change | SUBTOPIC: Average value of a function
 QUESTION: 1b | UNIT: Unit 5: Analytical Applications of Differentiation | SUBTOPIC: Mean Value Theorem"""
 
-YEAR_EXTRACT_PROMPT = """Look at this AP Calculus AB exam cover page image.
+YEAR_EXTRACT_PROMPT = """Look at this AP Chemistry exam cover page image.
 
 Extract the year and whether it's Form B.
 
@@ -304,7 +305,7 @@ def write_results(dir_path: Path, results: list[str]) -> Path:
 
 async def main_async():
     parser = argparse.ArgumentParser(
-        description="Analyze AP Calculus AB FRQ images and categorize by unit/subtopic"
+        description="Analyze AP Chemistry FRQ images and categorize by unit/subtopic"
     )
     parser.add_argument(
         "input_folder",
